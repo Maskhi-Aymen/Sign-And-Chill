@@ -40,9 +40,9 @@ class Activity(models.Model):
     activity_time = models.CharField(max_length=100)
     activity_duration = models.CharField(max_length=100)
     label= models.CharField(max_length=100,blank=True)
-
+ 
 class Plan(models.Model):
-    plan_id=models.BigAutoField(primary_key=True)
+    plan_id=models.BigAutoField(primary_key=True) 
     plan_name =models.CharField(max_length=100)
     plan_type =models.CharField(max_length=500)
     plan_activity=models.ManyToManyField(Activity,related_name='plan_activity')

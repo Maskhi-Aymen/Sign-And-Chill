@@ -35,7 +35,7 @@ export default function MusicList({ handleSong }) {
                     return val.admin;
                 }).map((val, key) => {
                     return (<div key={val.id} > 
-                        <MusicCard name={val.user_name} last_name={val.Lastname}  id={val.user_id} avatar={val.user_avatar} />
+                        <MusicCard name={val.user_name} last_name={val.user_Lastname} vale={val} address={val.user_address}  id={val.user_id} avatar={val.user_avatar} />
 
 
                     </div>)

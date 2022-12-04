@@ -26,7 +26,7 @@ export default function Meditate() {
 
   useEffect(()=>{
     if(!isLoaded){
-     fetch("http://localhost:8000/meditate").then(response=>
+     fetch("http://localhost:8000/plan").then(response=>
        response.json()
        )
      .then(data=>{
@@ -46,11 +46,11 @@ export default function Meditate() {
      
      {isLoaded ? (<div className='containerPlan'>
       {datamd.filter((val) => {
-    return val.med_name.toLowerCase();
+    return val.plan_name;
 }).map((val, key) => {
-    return (<div key='val.med_id' >
-        <Link to={'/todo/'+val.med_name}>
-     <WelcomePlan title={val.med_name} intro={val.med_description} img={val.med_imgurl} song={val.med_songurl}  />
+    return (<div key='val.plan_id' >
+        <Link to={'/todo/'+val.plan_name}>
+     <WelcomePlan title={val.plan_name} intro={val.plan_type} />
    </Link> </div>)
 })}</div>):<ReactLoading
                   height={"150px"}

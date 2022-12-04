@@ -185,7 +185,7 @@ export default function Doctor() {
       <Box component="div" onSubmit={handleSubmit} sx={{ display: 'flex' }}>
         <Grid item xs={1} ms={1} sx={{ my: { xs: 1, md: 6 }, p: { xs: 2, md: 3 }  }} style={{marginLeft:"350px"}}>
           <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 13 }, backgroundColor:'#f4acb72f' }}>
-            <Typography variant="h5" gutterBottom>{datas['user_name'] + ' ' + datas['user_Lastname']}</Typography>
+            <Typography variant="h5" gutterBottom>Wael Seedik</Typography>
             <Grid container spacing={2}>
               <Grid item xs={12} >
                 <Stack direction="row" spacing={2}>
@@ -199,12 +199,12 @@ export default function Doctor() {
                       </div>
                       <div className="userShowInfo">
                         <LocalPhoneOutlinedIcon className="userShowIcon" />
-                        <span className="userShowInfoTitle">{datas["user_mail"]}</span>
+                        <span className="userShowInfoTitle">56831826</span>
                       </div>
                       <span className="userShowTitle"> Local </span>
                       <div className="userShowInfo">
                         <PinDropOutlinedIcon className="userShowIcon" />
-                        <span className="userShowInfoTitle">{datas["user_dateOfJoin"]}</span>
+                        <span className="userShowInfoTitle">26 bis, Lachheb Center, Av. Habib Bourguiba, Tunis 2000</span>
                       </div>
                     </div>
                   </Grid>

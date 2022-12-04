@@ -5,9 +5,10 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import img from '../../assets/images/o.images/icon_plan.png'
 import PlayCircleFilledWhiteSharpIcon from '@mui/icons-material/PlayCircleFilledWhiteSharp';
 
-export default function MeditateCard({title,intro,img,song}) {
+export default function MeditateCard({title,intro}) {
   return (
     <Card sx={{ width: 300,height:300 ,backgroundColor :"transparent" ,border:'#9D8189 2px solid',borderRadius:5}}>
       <CardActionArea sx={{backgroundColor :"transparent" }}>

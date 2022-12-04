@@ -12,7 +12,7 @@ import VolumeUpRounded from '@mui/icons-material/VolumeUpRounded';
 import VolumeDownRounded from '@mui/icons-material/VolumeDownRounded';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 
-export default function MusicCard({ last_name, name,id ,avatar}) {
+export default function MusicCard({ last_name, name,id ,avatar,address,vale}) {
   const theme = useTheme(); 
   
   const [isPlaying, setIsPlaying] = useState(false);
@@ -30,7 +30,9 @@ export default function MusicCard({ last_name, name,id ,avatar}) {
 
   return (
     <Box sx={{ width: '100%', overflow: 'hidden' }}>
-      <Link to={"doctor/"+id}>
+      <Link to={"doctor/"+id} onClick={()=>{
+         localStorage.setItem("doctor",vale)
+      }}>
     <Widget>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
        
@@ -41,10 +43,10 @@ export default function MusicCard({ last_name, name,id ,avatar}) {
             Doctor
           </Typography>
           <Typography noWrap>
-            <b>{name}</b>
+            <b>{name} {last_name}</b>
           </Typography>
           <Typography noWrap letterSpacing={-0.25}>
-          {last_name}
+          {address}
           </Typography>
         </Box>
       </Box>
