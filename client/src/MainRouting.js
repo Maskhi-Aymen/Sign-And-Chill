@@ -3,6 +3,7 @@ import React from "react";
 import SignInSide from './pages/SignInSide';
 import Navbar from './components/navbar/navbar';
 import Footer from './components/footer/footer';
+import Meditate from "./pages/meditate";
 import Notes from './pages/Notes.js'
 import NewPlan from "./pages/NewPlan";
 import Content from './pages/content';
@@ -63,13 +64,14 @@ function Routing() {
         <Route exact path={"/newpassword/:userId"}><NewPassword /></Route>
 
  
-        <Route exact path={"/home"}  component={() => <ProtectedRoute user={user}  admin={usertype}><Navbar/><Content /></ProtectedRoute>}/>
+        <Route exact path={"/home"}  component={() => <ProtectedRoute user={user}  admin={usertype}><Navbar/><Meditate /></ProtectedRoute>}/>
+        <Route exact path={"/todo/:id"}  component={() => <ProtectedRoute user={user}  admin={usertype}><Navbar/><Content /></ProtectedRoute>}/>
         <Route exact path={"/account"}  component={() => <ProtectedRoute user={user} admin={usertype}><Navbar /><Account /></ProtectedRoute>}/>
         <Route exact path={"/doctor/:id"}  component={() => <ProtectedRoute user={user} admin={usertype}><Navbar /><Doctor /></ProtectedRoute>}/>
         <Route exact path={"/doctor"} component={() => <ProtectedRoute user={user} admin={usertype}><Navbar /><Media/></ProtectedRoute>}/>
         <Route exact path={"/notes"}component={() => <ProtectedRoute user={user} admin={usertype}><Navbar /><Notes/></ProtectedRoute>}/>
         <Route exact path={"/contact"} component={() =><ProtectedRoute user={user} admin={usertype}><Navbar /> <Contact/></ProtectedRoute>}/>
-        <Route exact path={"/Todo"} component={() => <ProtectedRoute user={user} admin={usertype}><Navbar /><TodoList/></ProtectedRoute>}/>
+        <Route exact path={"/todo"} component={() => <ProtectedRoute user={user} admin={usertype}><Navbar /><TodoList/></ProtectedRoute>}/>
         <Route exact path={"/privacy"} component={() => <ProtectedRoute user={user} admin={usertype}><Navbar /><Privacy/></ProtectedRoute>}/>
         <Route exact path={"/general-conditions"} component={() => <ProtectedRoute user={user} admin={usertype}><Navbar /><GeneralConditions/></ProtectedRoute>}/>
  

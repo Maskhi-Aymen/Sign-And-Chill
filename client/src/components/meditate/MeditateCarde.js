@@ -5,7 +5,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import MeditateWindow from './MeditateWindow';
+import PlayCircleFilledWhiteSharpIcon from '@mui/icons-material/PlayCircleFilledWhiteSharp';
 
 export default function MeditateCard({title,intro,img,song}) {
   return (
@@ -16,11 +16,7 @@ export default function MeditateCard({title,intro,img,song}) {
           height="170"
           image={img}
           alt="green iguana"
-          sx={{
-          
-          }}
-        />
-        
+        /> 
       </CardActionArea ><CardContent sx={{backgroundColor: 'neutral.contrastText', opacity: 0.7 }}>
           <Typography gutterBottom variant="h5" component="div">
           {title}
@@ -30,7 +26,7 @@ export default function MeditateCard({title,intro,img,song}) {
           </Typography>
         </CardContent>
       <CardActions sx={{backgroundColor: 'neutral.contrastText',border:'transparent', opacity: 0.9,justifyContent:"center"}}>
-         <MeditateWindow img={img} song={song}/>
+        <PlayCircleFilledWhiteSharpIcon />
       </CardActions>
     </Card>
   );

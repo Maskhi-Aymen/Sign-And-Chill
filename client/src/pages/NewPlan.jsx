@@ -25,7 +25,7 @@ const CssTextField = styled(TextField)({
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
         borderColor: '#F4ACB7',
-      },
+      }, 
       '&:hover fieldset': {
         borderColor: '#F4ACB7',
       },
@@ -60,6 +60,7 @@ const currencies = [
 
 export default function NewPlan() {
   const history= useHistory();
+  const user =JSON.parse(localStorage.getItem("userinfo"))
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -70,7 +71,7 @@ export default function NewPlan() {
         axios.post("http://localhost:8000/plan", JSON.stringify(
           {
             'plan_name':data.get('title'),
-            'plan_type': currency,
+            'plan_type': currency
           }
         ),{
            headers: {
@@ -92,6 +93,7 @@ export default function NewPlan() {
         };
   return (
     <div className="newUser">
+      <div className='yellocard'>
       <h1 className="newUserTitle">New Plan</h1>
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                     <Grid container spacing={2}>
@@ -133,6 +135,6 @@ export default function NewPlan() {
                         </Grid>
                     </Grid>
                 </Box>
-    </div>
+    </div></div>
   );
 }

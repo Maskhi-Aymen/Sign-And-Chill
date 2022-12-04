@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { Stack } from "@mui/material";
 import { Container } from "@material-ui/core";
 import { Typography,Button } from "@mui/material";
+import MessageOutlinedIcon from '@mui/icons-material/MessageOutlined';
 import React from "react";
 import axios from "axios";
 
@@ -38,11 +39,6 @@ export default function UserList() {
     
    }})
 
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
-    axios.delete(`http://localhost:8000/user/${id}`)
-    window.location.reload(true);
-  };
 
   const columns = [
     { field: "user_id", headerName: "ID", width: 100 },
@@ -71,13 +67,8 @@ export default function UserList() {
       width: 150,
     },   
      {
-      field: "user_dateOfJoin",
-      headerName: "Date of join",
-      width: 140,
-    },
-    {
-      field: "admin",
-      headerName: "Admin",
+      field: "user_type",
+      headerName: "State",
       width: 140,
     },
     {
@@ -88,12 +79,8 @@ export default function UserList() {
         return (
           <>
             <Link to={"/user/" + params.row.user_id}>
-              <button className="userListEdit" onClick={()=>{localStorage.setItem('userSelected',JSON.stringify(params.row))}} >Edit</button>
+              <button className="userListEdit" onClick={()=>{localStorage.setItem('userSelected',JSON.stringify(params.row))}} ><MessageOutlinedIcon/></button>
             </Link>
-            <DeleteOutline
-              className="userListDelete"
-              onClick={() => handleDelete(params.row.id)}
-            />
           </>
         );
       },

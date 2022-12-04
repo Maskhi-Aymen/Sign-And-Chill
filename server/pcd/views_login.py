@@ -8,8 +8,7 @@ from django.http.response import JsonResponse
 from pcd.models import Admin,User,ResetPassword
 from bson import ObjectId
 from django.http import HttpResponse
-from pcd.serializers import AdminSerializer,UserSerializer,ResetPasswordSerializer,NoteSerializer,SongSerializer,PlayListSerializer,FavoriteSerializer
-
+from pcd.serializers import AdminSerializer,UserSerializer,ResetPasswordSerializer,NoteSerializer
 
 @csrf_exempt 
 def login(request,id):
@@ -33,8 +32,8 @@ def SendMailApi(request,id=0):
       resetData=ResetPasswordSerializer(data={"user":user_serializer.data['user_id'],"token":token})
       resetData.is_valid()
       resetData.save()
-      send_mail('Chillin : Reset Password',
-      'Reset your Chillin password \n you can change your password from this link :  http://localhost:3000/newpassword/' +token,'chillin.pcd@gmail',
+      send_mail('Sign and Chill : Reset Password',
+      'Reset your Sing and Chill password \n you can change your password from this link :  http://localhost:3000/newpassword/' +token,'chillin.pcd@gmail',
       [data['email']],fail_silently=False)
       return JsonResponse('Email was sended with success, check your email to reset your password',safe=False)
     except ResetPassword.DoesNotExist:
@@ -45,7 +44,7 @@ def SendMailApi(request,id=0):
         resetData.is_valid()
         resetData.save()
         send_mail('Chillin : Reset Password',
-        'Reset your Chillin password \n you can change your password from this link :  http://localhost:3000/newpassword/' +token,'chillin.pcd@gmail.com',
+        'Reset your Sign and Chill password \n you can change your password from this link :  http://localhost:3000/newpassword/' +token,'chillin.pcd@gmail.com',
         [data['email']],fail_silently=False)
         return JsonResponse('Email was sended with success, check your email to reset your password',safe=False)
     except User.DoesNotExist:

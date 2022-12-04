@@ -21,7 +21,6 @@ export default function Registration() {
     confirmPassword: "",
   });
   const [photo, setphoto] = useState()
-  const [obj, setobj] = useState("")
   const History = useHistory();
   const inputs = [
     {
@@ -104,7 +103,6 @@ export default function Registration() {
         "user_name": values["name"],
         "user_Lastname": values["last_name"],
         "user_date_birth": dayjs(values["birthday"]).format('YYYY-MM-DD'),
-        "user_objectifs":document.getElementById("objectif").value,
         "user_avatar":photo,
         'user_dateOfJoin':dayjs().format('YYYY-MM-DD')
       }),

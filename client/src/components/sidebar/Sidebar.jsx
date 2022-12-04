@@ -27,7 +27,7 @@ export default function Sidebar() {
             <Link to="/users" className="link">
               <li className="sidebarListItem">
                 <PermIdentity className="sidebarIcon" />
-                Users
+                contacts
               </li>
             </Link>
             <Link to="/plans" className="link">

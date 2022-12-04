@@ -7,10 +7,10 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from rest_framework import viewsets
 from django.http.response import JsonResponse
-from pcd.models import User,Publication,Song,PlayList,Report,Meditate,Plan,Activity,Message,Statistics,ResetPassword
+from pcd.models import User,Plan,Activity,Message,Statistics,ResetPassword
 from bson import ObjectId
 from django.http import HttpResponse
-from pcd.serializers import UserSerializer,PublicationSerializer,SongSerializer,PlayListSerializer,ActivitySerializer,ResetPasswordSerializer,StatisticSerializer,MeditateSerializer,MessageSerializer,PlanSerializer,ReportSerializer
+from pcd.serializers import UserSerializer,ActivitySerializer,ResetPasswordSerializer,StatisticSerializer,MessageSerializer,PlanSerializer
 from datetime import datetime , date
 
 @csrf_exempt 
@@ -24,8 +24,8 @@ def UserApi(request,id=0):
         user_serializer=UserSerializer(data=user_data)
         if user_serializer.is_valid():
             user_serializer.save()
-            send_mail('Chillin : Reset Password',
-            'Hello '+[user_serializer.data['user_name']]+' \n Welcome to Chillin\'!  Thanks for opening your account on the chillin.com.\n We hope you enjoy your experience!' ,'chillin.pcd@gmail',
+            send_mail('Sign and Chill : Reset Password',
+            'Hello '+user_serializer.data['user_name']+' \n Welcome to Chillin\'!  Thanks for opening your account on the chillin.com.\n We hope you enjoy your experience!' ,'chillin.pcd@gmail',
         [user_serializer.data['email']],fail_silently=False)
             return JsonResponse("added succefully",safe=False)
         print(user_serializer.errors)
@@ -49,105 +49,7 @@ def GetUser(request,id=0):
         user=User.objects.get(user_id = id)
         user_serializer=UserSerializer(user) 
         return JsonResponse(user_serializer.data,safe=False)
-        
-@csrf_exempt
-def PublicationApi(request,id=0):
-    if request.method=='GET':
-        pub = Publication.objects.all().order_by("pub_id").reverse()
-        pub_serializer=PublicationSerializer(pub,many=True)
-        return JsonResponse(pub_serializer.data,safe=False) 
-    elif request.method=='POST':
-        pub_data=JSONParser().parse(request)
-        pub_serializer=PublicationSerializer(data=pub_data)
-        if pub_serializer.is_valid():
-            pub_serializer.save()
-            return JsonResponse("added succefully",safe=False)
-        print(pub_serializer.errors)
-        return JsonResponse("Failed to add",safe=False)
-    elif request.method=='PUT':
-        pub_data=JSONParser().parse(request)
-        pub=Publication.objects.get(pub_id=pub_data['pub_id'])
-        pub_serializer=PublicationSerializer(pub,data=pub_data)
-        if pub_serializer.is_valid():
-            pub_serializer.save()
-            return JsonResponse("Update Successfully",safe=False)
-        print(pub_serializer.errors)
-        return JsonResponse("Failed to update")
-    elif request.method=='DELETE':
-        pub=Publication.objects.get(pub_id=id)
-        pub.delete()
-        return JsonResponse("Deleted Successfully",safe=False)
-    elif request.method=='PATCH':
-        pub=Publication.objects.get(pub_id = id)
-        pub_serializer=PublicationSerializer(pub)
-        return JsonResponse(pub_serializer.data,safe=False)
 
-
-@csrf_exempt
-def PlaylistApi(request,id=0):
-    if request.method=='GET':
-        pl = PlayList.objects.all()
-        pl_serializer=PlayListSerializer(pl,many=True)
-        return JsonResponse(pl_serializer.data,safe=False)
-    elif request.method=='POST':
-        pl_data=JSONParser().parse(request)
-        pl_serializer=PlayListSerializer(data=pl_data)
-        if pl_serializer.is_valid():
-            pl_serializer.save()
-            return JsonResponse("added succefully",safe=False)
-        print(pl_serializer.errors)
-        return JsonResponse("Failed to add",safe=False)
-    elif request.method=='PUT':
-        pl_data=JSONParser().parse(request)
-        pl=PlayList.objects.get(pl_id=pl_data['pl_id'])
-        pl_serializer=PlayListSerializer(pl,data=pl_data)
-        if pl_serializer.is_valid():
-            pl_serializer.save()
-            return JsonResponse("Update Successfully",safe=False)
-        return JsonResponse("Failed to update")
-    elif request.method=='DELETE':
-        pl=PlayList.objects.get(pl_id = id)
-        pl.delete()
-        return JsonResponse("Deleted Successfully",safe=False)
-    elif request.method=='PATCH':
-        pl=PlayList.objects.get(pl_id = id)
-        pl_serializer=PlayListSerializer(pl)
-        return JsonResponse(pl_serializer.data,safe=False)
-
-@csrf_exempt
-def SongApi(request,id=0):
-    if request.method=='GET':
-        song = Song.objects.all()
-        song_serializer=SongSerializer(song,many=True)
-        return JsonResponse(song_serializer.data,safe=False)
-    elif request.method=='POST':
-        song_data=JSONParser().parse(request)
-        song_serializer=SongSerializer(data=song_data)
-        if song_serializer.is_valid():
-            song_serializer.save()
-            return JsonResponse("added succefully",safe=False)
-        print(song_serializer.errors)
-        return JsonResponse("Failed to add",safe=False)
-    elif request.method=='PUT':
-        song_data=JSONParser().parse(request)
-        song=Song.objects.get(id=song_data['id'])
-        song_serializer=SongSerializer(song,data=song_data,partial=True)
-        if song_serializer.is_valid():
-            song_serializer.save()
-            return JsonResponse("Update Successfully",safe=False)
-        return JsonResponse("Failed to update",safe=False)
-    elif request.method=='DELETE':
-        song=Song.objects.get(id = id)
-        song.delete()
-        return JsonResponse("Deleted Successfully",safe=False)
-    elif request.method=='PATCH':
-        song=Song.objects.get(id = id)
-        song_serializer=SongSerializer(song)
-        return JsonResponse(song_serializer.data,safe=False)
-    elif request.method=='HEAD':
-        song=Song.objects.get(song_sleep = "True")
-        song_serializer=SongSerializer(song,many=True)
-        return JsonResponse(song_serializer.data,safe=False)
 
 class MessageAPI(viewsets.ModelViewSet):
     serializer_class=MessageSerializer 
@@ -175,24 +77,6 @@ def MessageApi(request,id=0):
     elif request.method=='DELETE':
         message=Message.objects.get(message_id = id)
         message.delete()
-        return JsonResponse("Deleted Successfully",safe=False)
-@csrf_exempt
-def ReportApi(request,id=0):
-    if request.method=='GET':
-        report = Report.objects.all()
-        report_serializer=ReportSerializer(report,many=True)
-        return JsonResponse(report_serializer.data,safe=False)
-    elif request.method=='POST':
-        report_data=JSONParser().parse(request)
-        report_serializer=ReportSerializer(data=report_data)
-        if report_serializer.is_valid():
-            report_serializer.save()
-            return JsonResponse("added succefully",safe=False)
-        print(report_serializer.errors)
-        return JsonResponse("Failed to add",safe=False)
-    elif request.method=='DELETE':
-        report=Report.objects.get(Report_id = id)
-        report.delete()
         return JsonResponse("Deleted Successfully",safe=False)
 
 @csrf_exempt
@@ -253,7 +137,7 @@ def PlanApi(request,id=0):
         if plan_serializer.is_valid():
             plan_serializer.save()
             return JsonResponse("added succefully",safe=False)
-        return JsonResponse("Failed to add",safe=False)
+        return JsonResponse(plan_data,safe=False)
     elif request.method=='PUT':
         plan_data=JSONParser().parse(request)
         plan=Plan.objects.get(plan_id = plan_data['plan_id'] )
@@ -272,69 +156,6 @@ def PlanApi(request,id=0):
         return JsonResponse(plan_serializer.data,safe=False)
 
 @csrf_exempt
-def MeditateApi(request,id=0):
-    if request.method=='GET':
-        meditate = Meditate.objects.all()
-        meditate_serializer=MeditateSerializer(meditate,many=True)
-        return JsonResponse(meditate_serializer.data,safe=False)
-    elif request.method=='POST':
-        meditate_data=JSONParser().parse(request)
-        meditate_serializer=MeditateSerializer(data=meditate_data)
-        if meditate_serializer.is_valid():
-            meditate_serializer.save()
-            return JsonResponse("added succefully",safe=False)
-        return JsonResponse("Failed to add",safe=False)
-    elif request.method=='PUT':
-        meditate_data=JSONParser().parse(request)
-        meditate=Meditate.objects.get(med_id = meditate_data['med_id'] )
-        meditate_serializer=MeditateSerializer(meditate,data=meditate_data)
-        if meditate_serializer.is_valid():
-            meditate_serializer.save()
-            return JsonResponse("Update Successfully",safe=False)
-        return JsonResponse("Failed to update")
-    elif request.method=='DELETE':
-        meditate=Meditate.objects.get(med_id = id)
-        meditate.delete()
-        return JsonResponse("Deleted Successfully",safe=False)
-    elif request.method=='PATCH':
-        meditate=Meditate.objects.get(med_id = id)
-        meditate_serializer=MeditateSerializer(meditate)
-        return JsonResponse(meditate_serializer.data,safe=False)
-
-@csrf_exempt
-def Playlist_SongApi(request,id=0):
-    if request.method=='GET':
-        songs=Song.objects.filter(playliste_song=id)
-        songs_serializer=SongSerializer(songs,many=True)
-        return JsonResponse(songs_serializer.data,safe=False)
-    elif request.method=='POST':
-        pl_data=JSONParser().parse(request)
-        pl=PlayList.objects.get(pl_id=pl_data['pl_id'])
-        pl_serializer=PlayListSerializer(pl,partial=True)
-        songs=pl_serializer.data.get('songs')
-        songs.append(pl_data['id'])
-        pl_serializer.data.update({'songs':songs})
-        p=PlayListSerializer(pl,data=pl_serializer.data)
-        if p.is_valid():
-            p.save()
-            return JsonResponse(p.data)
-        return JsonResponse(p.errors)
-    elif request.method=='DELETE':
-        pl_data=JSONParser().parse(request)
-        pl=PlayList.objects.get(pl_id=pl_data['pl_id'])
-        pl_serializer=PlayListSerializer(pl,partial=True)
-        songs=pl_serializer.data.get('songs')
-        print(songs)
-        songs.remove(int(pl_data['id']))
-        print(songs)
-        pl_serializer.data.update({'songs':songs})
-        p=PublicationSerializer(pl,data=pl_serializer.data)
-        if p.is_valid():
-            p.save()
-            return JsonResponse(p.data)
-        return JsonResponse(p.errors)
-
-@csrf_exempt
 def Plan_ActivityApi(request,id=0):
     if request.method=='GET':
         plan=Activity.objects.filter(plan_activity=id)
@@ -345,7 +166,7 @@ def Plan_ActivityApi(request,id=0):
         plan=Plan.objects.get(plan_id=plan_data['plan_id'])
         plan_serializer=PlanSerializer(plan,partial=True)
         PlanActivity=plan_serializer.data.get('plan_activity')
-        PlanActivity.append(id)
+        PlanActivity.append(id) 
         plan_serializer.data.update({'plan_activity':PlanActivity})
         p=PlanSerializer(plan,data=plan_serializer.data)
         if p.is_valid():

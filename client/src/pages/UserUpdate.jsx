@@ -4,12 +4,14 @@ import {
   PermIdentity
 } from "@material-ui/icons";
 import * as React from 'react';
+import { Card } from "@mui/material";
 import { TextField,Button } from "@material-ui/core";
 import dayjs from 'dayjs';
 import PersonPinIcon from '@mui/icons-material/PersonPin';
 import "../assets/styles/user.css";
-import {  useState} from "react";
+import { useState} from "react";
 import Box from '@mui/material/Box';
+import { useEffect } from "react";
 import MenuItem from '@mui/material/MenuItem';
 import { useHistory } from "react-router-dom";
 import axios from "axios";
@@ -49,7 +51,25 @@ const CssTextField = styled(TextField)({
 
 export default function UserEdit() {
   const user =JSON.parse(localStorage.getItem("userSelected"));
-  const history =useHistory();
+  const history =useHistory(); 
+   const [data, setData] = useState([]);
+    const [isLoaded,setIsLoaded]=useState(false);
+    useEffect(()=>{
+      if(!isLoaded){
+       fetch(`http://localhost:8000/messages`).then(response=>
+         response.json()
+         )
+       .then(dataM=>{
+         setIsLoaded(true)
+         setData(dataM)
+         })
+       .catch(err=>{
+         console.log(err)
+       })
+      
+     }
+  
+    },[])
   const [photo, setphoto] = useState(user['user_avatar'])
  
   const chooseAvatar= (e)=>{
@@ -75,22 +95,6 @@ const handleSubmit = (event) => {
          "Authorization": "Bearer "
        }
      })
-     .then((json) => {
-      localStorage.setItem('userSelected',JSON.stringify(
-        {
-          'user_id':user['user_id'],
-          'user_name':data.get('firstName'),
-          'user_Lastname': data.get('lastName'),
-          'admin': currency,
-          'user_mail': data.get('email'),
-          'user_password': data.get('password'),
-          'user_date_birth': dayjs(user['user_date_birth']).format('YYYY-MM-DD'),
-          'user_avatar':photo,
-          'user_dateOfJoin':dayjs(user['user_dateOfJoin']).format('YYYY-MM-DD'),
-          'user_type':user['user_type']
-        }))
-      window.location.reload(true)
-     })
      .catch((err) => console.log(err));
    };
 
@@ -99,6 +103,7 @@ const handleSubmit = (event) => {
     const handleChange = (event) => {
       setCurrency(event.target.value);
     };
+
 
   return (
     <div className="user">
@@ -140,89 +145,27 @@ const handleSubmit = (event) => {
             </div>
           </div>
         </div>
-        <div className="userUpdate">
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-      
-          <SelectAvatar setavatar={e=>setphoto(e)} oldavatar={photo}/>
-                    <Grid container spacing={2}sx={{marginTop:2}}>
-                        <Grid item xs={12} sm={6}>
-                            <CssTextField
-                                required
-                                defaultValue={user['user_name']}
-                                id="firstName"
-                                name="firstName"
-                                label="First name"
-                                fullWidth
-                                autoComplete="given-name"
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <CssTextField
-                                required
-                                defaultValue={user['user_Lastname']}
-                                id="lastName"
-                                name="lastName"
-                                label="Last name"
-                                fullWidth
-                                autoComplete="given-name"
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <CssTextField
-                                required
-                                defaultValue={user['user_mail']}
-                                fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <CssTextField
-                                required
-                                defaultValue={user['user_password']}
-                                id="password"
-                                name="password"
-                                label="Password"
-                                type="password"
-                                fullWidth
-                                autoComplete="off"
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid item xs={12} >
-                            <CssTextField
-                                id="usertype"
-                                select
-                                label="Select user type"
-                                fullWidth
-                                value={currency}
-                                onChange={handleChange}
-                            >
-                                {currencies.map((option) => (
-                                    <MenuItem key={option.value} value={option.value}>
-                                        {option.label}
-                                    </MenuItem>
-                                ))}
-                            </CssTextField>
-                        </Grid>
-                        <Grid item xs={12} md={6} margin='auto'>  
-                            <Button
-                                type="submit"
-                                fullWidth
-                                sx={{backgroundColor:'#F4ACB7'}}
-                                variant="contained"
-                                onSubmit={handleSubmit}
-                                >
-                                Update
-                            </Button>                        
-                        </Grid>
-                    </Grid>
+        <div className="userUpdate" style={{height:"600px"}}>
+        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }} >
+        {data.filter((val) => {
+    return val.message_user;
+}).map((val, key) => {
+    return (<div key='message_date' >
+        <Card sx={{ Width: "9%", borderRadius: 2, border: '1px #9D8189 solid', }} className="chat_you">{val.message_content}</Card></div>)})}
+        <Card sx={{ borderRadius: 2, border: '1px #9D8189 solid',position:'absolute',bottom:12 }} className="chat_me">
+                                   <Grid item  >
+                          <TextField
+                              required
+                              id="message"
+                              name="Message"
+                              label="Message"
+                              fullWidth
+                              autoComplete="given-name"
+                              variant="outlined"
+                          /><button class="btn" onClick={handleSubmit}>Send</button>
+                      </Grid></Card>
                 </Box>
-          
+               
           
           
         </div>

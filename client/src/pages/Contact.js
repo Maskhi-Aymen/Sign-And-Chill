@@ -81,7 +81,7 @@ export default function Contact() {
                         <p>
                           <span>Email:</span>
                           <a href="mailto:info@yoursite.com">
-                          chillin.pcd@gmail.com
+                          Profesionnel@gmail.com
                           </a>
                         </p>
                       </div>

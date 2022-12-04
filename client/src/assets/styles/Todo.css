@@ -117,3 +117,32 @@ h1 {
       width: 200px;
       height: 100%;
   }
+
+
+
+  .chat_you {
+    display: flex;
+    
+    justify-content: space-between;
+   height: 54px;
+    align-items: center;
+    margin: 4px auto;
+    width: 80%;
+    color: #fff;
+    background: linear-gradient(
+      90deg,
+      #ebe5e764 0%,
+      #ec93d648 100%
+    );}
+
+    .chat_me {
+      width:46%;
+      border:3px #FFE5D9 groove;
+      margin-top: 90px;
+      background: linear-gradient(
+         90deg,
+         #FFE5D9 0%,
+         #FFCAD4 100%
+       );
+     
+       }
